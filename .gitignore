@@ -109,3 +109,4 @@ venv.bak/
 *logs
 data
 *data.tar.gz
+*.out

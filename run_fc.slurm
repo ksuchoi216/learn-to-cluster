@@ -9,5 +9,4 @@
 module purge
 module load cuda
 
-# srun sh './scripts/gae/train_gae_cut.sh'
-srun python './gae/main.py'
+srun sh '/dcs/pg20/u2085214/fc/learn-to-cluster/scripts/gae/train_gae_cut.sh'
