@@ -9,4 +9,6 @@
 module purge
 module load cuda
 
-srun sh '/dcs/pg20/u2085214/fc/learn-to-cluster/scripts/gae/train_gae_cut.sh'
+srun sh './scripts/gae/train_gae_cut.sh'
+# srun sh './scripts/lgcn/train_lgcn_ms1m.sh'
+# srun sh './test_res.sh'

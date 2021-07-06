@@ -43,9 +43,6 @@ def parse_args():
 
 def main():
     
-    print('check')
-    exit()
-    
     args = parse_args()
     cfg = Config.fromfile(args.config)
 
