@@ -63,8 +63,8 @@ def build_optimizer(model, optimizer_cfg):
     paramwise_options = optimizer_cfg.pop('paramwise_options', None)
     assert paramwise_options is None
     return obj_from_dict(optimizer_cfg, torch.optim,
-                         dict(params=model.parameters())) 
-
+                         dict(params=model.parameters()))
+    
     """
     obj_from_dict(info, parent=None, default_args=None)
 
