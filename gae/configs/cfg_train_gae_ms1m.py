@@ -32,7 +32,7 @@ test_data = dict(
 )
 
 # model
-model = dict(type='gae', kwargs=dict(feature_dim=32))
+model = dict(type='gae', kwargs=dict(feature_dim=256))
 
 # training args
 optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=1e-4)

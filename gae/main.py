@@ -6,8 +6,6 @@ import argparse
 
 from mmcv import Config
 
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(__file__))) #parant folder load
 from utils import (create_logger, set_random_seed, rm_suffix,
                    mkdir_if_no_exists)
 
@@ -16,10 +14,10 @@ from gae import build_handler
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='VGAE or GAE')
-    parser.add_argument('--config', help='config file path')#gae/configs/$cfg_name.py
+    parser = argparse.ArgumentParser(description='new method gae')
+    parser.add_argument('--config', help='config file path')
     parser.add_argument('--seed', type=int, default=1, help='random seed')
-    parser.add_argument('--phase', choices=['test', 'train'], default='test')#'train'
+    parser.add_argument('--phase', choices=['test', 'train'], default='test')
     parser.add_argument('--work_dir', help='the dir to save logs and models')
     parser.add_argument('--load_from',
                         default=None,
@@ -42,7 +40,6 @@ def parse_args():
 
 
 def main():
-    
     args = parse_args()
     cfg = Config.fromfile(args.config)
 
@@ -71,19 +68,19 @@ def main():
     cfg.distributed = args.distributed
     cfg.save_output = args.save_output
     cfg.force = args.force
-    
+
     logger = create_logger()
-    
+
     # set random seeds
     if args.seed is not None:
         logger.info('Set random seed to {}'.format(args.seed))
         set_random_seed(args.seed)
-    
-    model = build_model(cfg.model['type'], **cfg.model['kwargs']) #build model: odel = dict(type='gae', kwargs=dict(feature_dim=256))
-    handler = build_handler(args.phase) #tain_gae.py or test_gae.py <= args.pahse:choices=['test', 'train']
-    
-    handler(model, cfg, logger) #e.g. call train_gae(gae,cfg,tracking event)
+
+    model = build_model(cfg.model['type'], **cfg.model['kwargs'])
+    handler = build_handler(args.phase)
+
+    handler(model, cfg, logger)
 
 
-if __name__ == '_ _main__':
+if __name__ == '__main__':
     main()

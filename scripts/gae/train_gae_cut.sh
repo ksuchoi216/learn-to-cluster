@@ -9,11 +9,11 @@ python gae/main.py \
     --config $config \
     --phase 'train'
 
-# test
-# load_from=data/work_dir/$cfg_name/latest.pth
-# python gae/main.py \
-#     --config $config \
-#     --phase 'test' \
-#     --load_from $load_from \
-#     --save_output \
-#     --force
+test
+load_from=data/work_dir/$cfg_name/latest.pth
+python gae/main.py \
+    --config $config \
+    --phase 'test' \
+    --load_from $load_from \
+    --save_output \
+    --force

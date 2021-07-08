@@ -13,11 +13,13 @@ def batch_processor(model, data, train_mode):
     assert train_mode
 
     A_pred, loss = model(data, return_loss=True) #retrn_loss=true => output with loss 
+    
     log_vars = OrderedDict()
     
     _, A, _, gtmat = data
     
-    print('[shape] A_pred={} A={}'.format(A_pred.shape, A.shape))
+    print('Training loss:', loss)
+    # print('[shape] A_pred={} A={}'.format(A_pred.shape, A.shape))
     
     acc, p, r = online_evaluate(A_pred, A)
     

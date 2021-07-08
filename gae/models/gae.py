@@ -3,37 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn import init
 import numpy as np
-
-
-class MeanAggregator(nn.Module):
-    def __init__(self):
-        super(MeanAggregator, self).__init__()
-
-    def forward(self, features, A):
-        x = torch.bmm(A, features)
-        return x
-
-
-class GraphConv(nn.Module):
-    def __init__(self, in_dim, out_dim, agg, act=F.relu): #activation func modified.
-        super(GraphConv, self).__init__()
-        self.in_dim = in_dim
-        self.out_dim = out_dim
-        self.weight = nn.Parameter(torch.FloatTensor(in_dim * 2, out_dim))
-        self.bias = nn.Parameter(torch.FloatTensor(out_dim))
-        init.xavier_uniform_(self.weight)
-        init.constant_(self.bias, 0)
-        self.agg = agg()
-        self.act = act #activation func
-
-    def forward(self, features, A):
-        b, n, d = features.shape
-        assert (d == self.in_dim)
-        agg_feats = self.agg(features, A)
-        cat_feats = torch.cat([features, agg_feats], dim=2)
-        out = torch.einsum('bnd,df->bnf', (cat_feats, self.weight))
-        out = self.act(out + self.bias) #activation func modified
-        return out
     
 class GraphConvSparse(nn.Module):
     def __init__(self, input_dim, output_dim, activation = F.relu, **kwargs):
@@ -66,21 +35,12 @@ class gae(nn.Module):
         # self.CrossEnt = F.binary_cross_entropy() #nn.CrossEntropyLoss() #loss_fn   
 
     def encode(self, x, A, one_hop_idxs):
-        # data normalization l2 -> bn
         B, N, D = x.shape
-        print('org x:',x.shape)
-
-        # BN
-        # x = x.view(-1, D)
-        # x = self.bn0(x)
-        # x = x.view(B, N, D)
+        # print('org x:',x.shape)
 
         x = self.base_gcn(x, A)
-        print('1st x:',x.shape)
+        # print('1st x:',x.shape)
 
-        # x = self.conv2(x, A)
-        # print('2nd x:',x.shape)
-        # k1 = one_hop_idxs.size(-1)
         n=x.size(-2)
         dout = x.size(-1)
         
@@ -88,10 +48,10 @@ class gae(nn.Module):
         self.logstd = torch.exp(self.gcn_logstddev(x, A)).cuda()
         gaussian_noise = torch.randn(B, n, dout).cuda()
         
-        print('[shape] mean={} logstd={} gn={}'.format(self.mean.shape,self.logstd.shape,gaussian_noise.shape))
+        # print('[shape] mean={} logstd={} gn={}'.format(self.mean.shape,self.logstd.shape,gaussian_noise.shape))
         
         sampled_z = self.logstd * gaussian_noise + self.mean
-        print('sampled_z shape:', sampled_z.shape)
+        # print('sampled_z shape:', sampled_z.shape)
         
         return sampled_z
     
@@ -114,13 +74,12 @@ class gae(nn.Module):
         
         if return_loss:
             loss = F.binary_cross_entropy(A_pred.view(-1),A.view(-1))
-            print('crossent loss={}'.format(loss))
+            # print('crossent loss={}'.format(loss))
             kl_divergence=((0.5/A_pred.size(0))*(1+ 2*self.logstd - self.mean**2 - torch.exp(self.logstd)**2)).sum(1).mean()            
             loss-=kl_divergence
-            print('total loss={}, kl_div={}'.format(loss, kl_divergence))
+            # print('total loss={}, kl_div={}'.format(loss, kl_divergence))
             
             return A_pred, loss
-        
         else:
             assert("Error: calculation loss")
 

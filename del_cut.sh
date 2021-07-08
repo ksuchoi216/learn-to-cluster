@@ -1,0 +1,6 @@
+rm -r '/dcs/pg20/u2085214/fc/learn-to-cluster/data/features/part0_train_cut.bin'
+rm -r '/dcs/pg20/u2085214/fc/learn-to-cluster/data/features/part1_test_cut.bin'
+rm -r '/dcs/pg20/u2085214/fc/learn-to-cluster/data/knns/part0_train_cut'
+rm -r '/dcs/pg20/u2085214/fc/learn-to-cluster/data/knns/part1_test_cut'
+rm -r '/dcs/pg20/u2085214/fc/learn-to-cluster/data/labels/part0_train_cut.meta'
+rm -r '/dcs/pg20/u2085214/fc/learn-to-cluster/data/labels/part1_test_cut.meta'

@@ -1,3 +1,4 @@
+from numpy.lib.function_base import average
 import torch
 
 from evaluation import precision, recall, accuracy
