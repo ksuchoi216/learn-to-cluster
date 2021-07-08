@@ -39,7 +39,7 @@ def test(model, dataset, cfg, logger):
         model.eval()
         for i, (data, cid, node_list) in enumerate(data_loader):
             with torch.no_grad():
-                _, _, h1id, gtmat = data
+                _, A, h1id, gtmat = data
                 pred, loss = model(data, return_loss=True)
                 losses += [loss.item()]
                 pred = F.softmax(pred, dim=1)
@@ -48,7 +48,7 @@ def test(model, dataset, cfg, logger):
                         logger.info('[Test] Iter {}/{}'.format(
                             i, len(data_loader)))
                     else:
-                        acc, p, r = online_evaluate(gtmat, pred)
+                        acc, p, r = online_evaluate(A, pred) #gtmat -> A
                         logger.info(
                             '[Test] Iter {}/{}: Loss {:.4f}, '
                             'Accuracy {:.4f}, Precision {:.4f}, Recall {:.4f}'.
