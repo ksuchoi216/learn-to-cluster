@@ -68,6 +68,7 @@ class lgcn(nn.Module):
         for b in range(B):
             edge_feat[b, :, :] = x[b, one_hop_idxs[b]]
         edge_feat = edge_feat.view(-1, dout)
+        
         pred = self.classifier(edge_feat)
 
         # shape: (B*k1, 2)
@@ -75,9 +76,21 @@ class lgcn(nn.Module):
 
     def forward(self, data, return_loss=False):
         x, A, one_hop_idxs, labels = data
-        x = self.extract(x, A, one_hop_idxs)
+        pred = self.extract(x, A, one_hop_idxs)
+        
+        #print example.
+        # print('one_hop_idxs shape={}\n one_hope_idxs e.g.={}'.format(one_hop_idxs.shape,one_hop_idxs))
+        # print('A shape={}\nA e.g.={}'.format(A.shape,A[0]))
+        # print('x shape={}\nx e.g.={}'.format(x.shape,x[0]))
+        # print('pred shape={}\npred e.g.={}'.format(pred.shape,pred[0]))
+        # print('labels shape={}\nlabels e.g.={}'.format(labels.shape,labels[0]))
+        # print('labels.view(-1) shape={}\nlabels.view(-1) e.g.={}'.format(labels.view(-1).shape,labels.view(-1)[0]))
+
+        
         if return_loss:
-            loss = self.loss(x, labels.view(-1))
-            return x, loss
+            loss = self.loss(pred, labels.view(-1))
+            # print('loss shape={}, loss e.g.={}'.format(loss.shape,loss[0]))
+            
+            return pred, loss
         else:
-            return x
+            return pred

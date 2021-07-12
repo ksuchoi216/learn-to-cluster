@@ -1,5 +1,5 @@
 prefix=./data
-name=part1_test
+name=part1_test_cut
 
 oprefix=$prefix/baseline_results
 gt_labels=$prefix/labels/$name.meta
@@ -8,13 +8,15 @@ dim=256
 
 export PYTHONPATH=.
 
-method=aro
-th_sim=0.0
+
+method=knn_dbscan
 knn=80
-# knn=80
-# method=knn_aro
+knn_method=faiss
+th_sim=0.0
+eps=0.25
+min=1
 num_process=16
-pred_labels=$oprefix/$name\_$method\_k_$knn\_th_$th_sim/pred_labels.txt
+pred_labels=$oprefix/$name\_$method\_eps_$eps\_min_$min\_$knn_method\_k_$knn\_th_$th_sim/pred_labels.txt
 python tools/baseline_cluster.py \
     --prefix $prefix \
     --oprefix $oprefix \
@@ -23,6 +25,8 @@ python tools/baseline_cluster.py \
     --method $method \
     --knn $knn \
     --th_sim $th_sim \
+    --eps $eps \
+    --min_samples $min \
     --num_process $num_process
 
 # eval

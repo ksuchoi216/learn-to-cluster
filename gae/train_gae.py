@@ -18,7 +18,7 @@ def batch_processor(model, data, train_mode):
     
     _, A, _, gtmat = data
     
-    print('Training loss:', loss)
+    # print('Training loss:', loss)
     # print('[shape] A_pred={} A={}'.format(A_pred.shape, A.shape))
     
     acc, p, r = online_evaluate(A_pred, A)
@@ -27,6 +27,8 @@ def batch_processor(model, data, train_mode):
     log_vars['accuracy'] = acc
     log_vars['precision'] = p
     log_vars['recall'] = r
+    
+    print('[train] Loss {:.4f}, Accuracy {:.4f}, Precision {:.4f}, Recall {:.4f}'.format(loss, acc, p, r))
 
     outputs = dict(loss=loss, log_vars=log_vars, num_samples=len(gtmat))
 

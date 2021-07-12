@@ -1,5 +1,5 @@
 prefix=./data
-name=part1_test
+name=part1_test_cut
 
 oprefix=$prefix/baseline_results
 gt_labels=$prefix/labels/$name.meta
@@ -7,6 +7,7 @@ gt_labels=$prefix/labels/$name.meta
 dim=256
 
 export PYTHONPATH=.
+
 
 method=aro
 th_sim=0.0

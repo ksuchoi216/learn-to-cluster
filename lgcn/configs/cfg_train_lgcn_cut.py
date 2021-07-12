@@ -39,11 +39,11 @@ optimizer_config = {}
 
 lr_config = dict(
     policy='step',
-    step=[1, 2, 3],
+    step=[1,2],
 )
 
 batch_size_per_gpu = 16
-total_epochs = 4
+total_epochs = 2
 workflow = [('train', 1)]
 
 # testing args
@@ -59,6 +59,6 @@ workers_per_gpu = 1
 checkpoint_config = dict(interval=1)
 
 log_level = 'INFO'
-log_config = dict(interval=200, hooks=[
+log_config = dict(interval=100, hooks=[
     dict(type='TextLoggerHook'),
 ])

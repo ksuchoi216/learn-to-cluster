@@ -9,8 +9,6 @@
 module purge
 module load cuda
 
-srun sh './scripts/gae/train_gae_cut.sh'
-# srun sh './scripts/gae/train_gae_ms1m.sh'
 # srun sh './scripts/lgcn/train_lgcn_ms1m.sh'
-# srun sh './scripts/lgcn/train_lgcn_cut.sh'
-# srun sh './scripts/gae/test_res.sh'
+srun sh './scripts/lgcn/train_lgcn_cut.sh'
+

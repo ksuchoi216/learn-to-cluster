@@ -36,7 +36,6 @@ def build_index(dataset, n_neighbors):
 
     return nbrs, dists
 
-
 def create_neighbor_lookup(nbrs):
     """
     Key is the reference face, values are the neighbors.

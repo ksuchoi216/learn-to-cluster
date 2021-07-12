@@ -37,10 +37,10 @@ def test(model, dataset, cfg, logger):
             model.cuda()
 
         model.eval()
-        for i, (data, cid, node_list) in enumerate(data_loader):
+        for i, (data, cid, node_list) in enumerate(data_loader): 
             with torch.no_grad():
-                _, A, h1id, gtmat = data
-                pred, loss = model(data, return_loss=True)
+                _, A, h1id, gtmat = data #x, A, one_hops_list, labels
+                pred, loss = model(data, return_loss=True) # x, loss => A, loss
                 losses += [loss.item()]
                 pred = F.softmax(pred, dim=1)
                 if i % cfg.log_config.interval == 0:
