@@ -10,4 +10,4 @@ module purge
 module load cuda
 
 # srun python '/dcs/pg20/u2085214/fc/vgae_pytorch/train.py'
-srun sh '/dcs/pg20/u2085214/fc/vgae_pytorch/vgae.sh'
+srun sh run_vgae.sh
