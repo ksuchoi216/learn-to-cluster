@@ -42,7 +42,7 @@ class lgcn(nn.Module):
         self.conv2 = GraphConv(512, 512, MeanAggregator)
         self.conv3 = GraphConv(512, 256, MeanAggregator)
         self.conv4 = GraphConv(256, 256, MeanAggregator)
-
+    
         self.classifier = nn.Sequential(nn.Linear(256, 256), nn.PReLU(256),
                                         nn.Linear(256, 2))
         self.loss = nn.CrossEntropyLoss()
